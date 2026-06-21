@@ -1,3 +1,5 @@
+//Scratchpad for quick manual checks - main.js is real entry point
+
 import transactions from "./data.js";
 import { categorize, totalByCategory, detectRecurring } from "./logic.js";
 

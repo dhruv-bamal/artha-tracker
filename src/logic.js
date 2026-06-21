@@ -1,6 +1,3 @@
-import transactions from "./data.js";
-
-// Merchants to categories
 const categoryKeywords = {
   Food: [
     "swiggy",
@@ -30,7 +27,7 @@ const categoryKeywords = {
     "internet",
     "phone",
   ],
-  Others: [], // Catch-all
+  Others: [],
 };
 
 function categorize(transaction) {
