@@ -71,48 +71,29 @@ function totalByCategory(transactions) {
 }
 
 function detectRecurring(transactions) {
-  const grouped = {};
-  for (const transaction of transactions) {
-    const merchant = transaction.merchant;
-    if (!grouped[merchant]) {
-      grouped[merchant] = [];
-    }
-    grouped[merchant].push(transaction);
-  }
+  const grouped = transactions.reduce((acc, tx) => {
+    const merchant = tx.merchant;
+    if (!acc[merchant]) acc[merchant] = [];
+    acc[merchant].push(tx);
+    return acc;
+  }, {});
 
-  console.log("Grouped Merchants:", Object.keys(grouped));
+  return Object.entries(grouped)
+    .filter(([merchant, group]) => {
+      if (group.length < 2) return false;
 
-  const recurring = [];
-  for (const merchant in grouped) {
-    const group = grouped[merchant];
-    console.log(`Checking ${merchant}: ${group.length} transactions`);
-
-    if (group.length >= 2) {
       const amounts = group.map((t) => t.amount);
       const minAmount = Math.min(...amounts);
       const maxAmount = Math.max(...amounts);
       const percentDiff = (maxAmount - minAmount) / minAmount;
 
-      console.log(
-        `  Amounts: ${amounts}, Percent diff: ${(percentDiff * 100).toFixed(2)}%`,
-      );
-
-      if (percentDiff <= 0.1) {
-        console.log(`  → FLAGGED as recurring`);
-        recurring.push({
-          merchant: merchant,
-          amount: amounts[0],
-          count: group.length,
-        });
-      } else {
-        console.log(
-          `  → NOT flagged (${(percentDiff * 100).toFixed(2)}% > 10%)`,
-        );
-      }
-    }
-  }
-
-  return recurring;
+      return percentDiff <= 0.1;
+    })
+    .map(([merchant, group]) => ({
+      merchant: merchant,
+      amount: group[0].amount,
+      count: group.length,
+    }));
 }
 
 export { categorize, totalByCategory, detectRecurring };
