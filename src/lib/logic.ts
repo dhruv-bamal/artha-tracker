@@ -3,7 +3,7 @@ import type {
   Transaction,
   CategoryTotals,
   RecurringSubscription,
-} from "../type.js";
+} from "../types";
 
 const categoryKeywords = {
   Food: [
@@ -34,7 +34,7 @@ const categoryKeywords = {
     "internet",
     "phone",
   ],
-  Others: [],
+  Other: [],
 } as const;
 
 export function categorize(transaction: Transaction): Category {
@@ -90,7 +90,7 @@ export function detectRecurring(
   );
 
   return Object.entries(grouped)
-    .filter(([merchant, group]) => {
+    .filter(([, group]) => {
       if (group.length < 2) return false;
 
       const amounts = group.map((t) => t.amount);
