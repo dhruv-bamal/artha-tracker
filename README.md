@@ -2,7 +2,7 @@
 
 A spending & subscription tracker for Indian students and freelancers.
 
-![App screenshot](public/app-screenshot.png)
+![App screenshot](public/appScreenshot.png)
 
 ## What it does
 
