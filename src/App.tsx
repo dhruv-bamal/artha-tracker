@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import type { Transaction, Category } from "./types";
+import { categorize, detectRecurring } from "./lib/logic";
+import type { Transaction, Category, RecurringSubscription } from "./types";
 import Header from "./components/Header";
+import Summary from "./components/Summary";
+import RecurringSection from "./components/RecurringSection";
 import AddExpenseForm from "./components/AddExpenseForm";
 import ExpenseList from "./components/ExpenseList";
-import Summary from "./components/Summary";
 import initialData from "./lib/data";
-import { categorize } from "./lib/logic";
 
 type FilterCategory = Category | "All";
 
@@ -43,6 +44,10 @@ function App() {
       ? transactions
       : transactions.filter((tx) => categorize(tx) === activeCategory);
 
+  const recurring: RecurringSubscription[] = detectRecurring(transactions);
+
+  const recurringMerchants = new Set<string>(recurring.map((r) => r.merchant));
+
   const filterButtons: FilterCategory[] = [
     "All",
     "Food",
@@ -54,6 +59,7 @@ function App() {
     <div>
       <Header />
       <Summary transactions={transactions} />
+      <RecurringSection subscriptions={recurring} />
       <div>
         {filterButtons.map((cat) => (
           <button
@@ -72,6 +78,7 @@ function App() {
       <ExpenseList
         transactions={filteredTransactions}
         onDelete={deleteExpense}
+        recurringMerchants={recurringMerchants}
       />
     </div>
   );

@@ -4,9 +4,14 @@ import ExpenseItem from "./ExpenseItem";
 interface ExpenseListProps {
   transactions: Transaction[];
   onDelete: (id: string) => void;
+  recurringMerchants: Set<string>;
 }
 
-function ExpenseList({ transactions, onDelete }: ExpenseListProps) {
+function ExpenseList({
+  transactions,
+  onDelete,
+  recurringMerchants,
+}: ExpenseListProps) {
   if (transactions.length === 0) {
     return (
       <div>
@@ -18,7 +23,12 @@ function ExpenseList({ transactions, onDelete }: ExpenseListProps) {
   return (
     <div>
       {transactions.map((tx) => (
-        <ExpenseItem key={tx.id} transaction={tx} onDelete={onDelete} />
+        <ExpenseItem
+          key={tx.id}
+          transaction={tx}
+          onDelete={onDelete}
+          isRecurring={recurringMerchants.has(tx.merchant)}
+        />
       ))}
     </div>
   );

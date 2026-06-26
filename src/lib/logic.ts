@@ -81,7 +81,7 @@ export function detectRecurring(
 ): RecurringSubscription[] {
   const grouped = transactions.reduce(
     (acc: Record<string, Transaction[]>, tx) => {
-      const merchant = tx.merchant;
+      const merchant = tx.merchant.toLowerCase();
       if (!acc[merchant]) acc[merchant] = [];
       acc[merchant].push(tx);
       return acc;
