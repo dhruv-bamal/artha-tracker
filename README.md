@@ -1,4 +1,4 @@
-# Artha Tracker
+# Money Tracker
 
 A spending & subscription tracker for Indian students and freelancers.
 
