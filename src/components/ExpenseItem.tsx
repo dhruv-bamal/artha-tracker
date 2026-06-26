@@ -3,7 +3,7 @@ import { categorize } from "../lib/logic";
 
 interface ExpenseItemProps {
   transaction: Transaction;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
 
 function ExpenseItem({ transaction, onDelete }: ExpenseItemProps) {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Transaction, Category } from "./types";
 import Header from "./components/Header";
+import AddExpenseForm from "./components/AddExpenseForm";
 import ExpenseList from "./components/ExpenseList";
 import Summary from "./components/Summary";
 import initialData from "./lib/data";
@@ -12,23 +13,32 @@ function App() {
   const [transactions, setTransactions] = useState<Transaction[]>(initialData);
   const [activeCategory, setActiveCategory] = useState<FilterCategory>("All");
 
+  function addExpense(transaction: Transaction): void {
+    setTransactions([...transactions, transaction]);
+  }
+
+  function deleteExpense(id: string): void {
+    setTransactions(transactions.filter((t) => t.id !== id));
+  }
+
   const filteredTransactions =
     activeCategory === "All"
       ? transactions
       : transactions.filter((tx) => categorize(tx) === activeCategory);
 
-  function deleteExpense(id: number): void {
-    setTransactions(transactions.filter((t) => t.id !== id));
-  }
+  const filterButtons: FilterCategory[] = [
+    "All",
+    "Food",
+    "Transport",
+    "Subscriptions",
+  ];
 
   return (
     <div>
       <Header />
       <Summary transactions={transactions} />
       <div>
-        {(
-          ["All", "Food", "Transport", "Subscriptions"] as FilterCategory[]
-        ).map((cat) => (
+        {filterButtons.map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
@@ -41,6 +51,7 @@ function App() {
           </button>
         ))}
       </div>
+      <AddExpenseForm onAdd={addExpense} />
       <ExpenseList
         transactions={filteredTransactions}
         onDelete={deleteExpense}

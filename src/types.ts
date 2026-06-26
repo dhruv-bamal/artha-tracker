@@ -7,7 +7,7 @@ export type Category =
   | "Other";
 
 export interface Transaction {
-  id: number;
+  id: string;
   amount: number;
   merchant: string;
   date: string; // ISO format: YYYY-MM-DD

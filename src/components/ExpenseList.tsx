@@ -3,7 +3,7 @@ import ExpenseItem from "./ExpenseItem";
 
 interface ExpenseListProps {
   transactions: Transaction[];
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
 
 function ExpenseList({ transactions, onDelete }: ExpenseListProps) {
