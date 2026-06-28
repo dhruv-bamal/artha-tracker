@@ -44,7 +44,7 @@ A spending & subscription tracker for Indian students and freelancers.
 ## Run locally
 
 ```bash
-git clone https://github.com/your-username/monet-tracker.git
+git clone https://github.com/dhruv-bamal/money-tracker.git
 cd money-tracker
 npm install
 npm run dev
