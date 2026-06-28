@@ -55,6 +55,7 @@ function App() {
     "Food",
     "Transport",
     "Subscriptions",
+    "Bills",
   ];
 
   return (
